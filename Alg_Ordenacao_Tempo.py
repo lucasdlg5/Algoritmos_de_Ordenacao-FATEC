@@ -1,5 +1,7 @@
 #Lucas Domingos Leão Gomes
-
+from random import random, shuffle
+import time
+print ("-------------------------------------------------------------\n         |                         Time(s)                  |\n-------------------------------------------------------------\n         |    Mergesort    QuickSort     Selection    Native|")
 def selection(v):
     ordenado = []
     while v:
@@ -7,16 +9,73 @@ def selection(v):
         v.remove(min(v)) #Captura a mesma referencia do menor valor da variavel V e o remove
     return ordenado
     
-def mergesort():
+def merge(e, d):
+    r = []
+    i, j = 0, 0
+    while i < len(e) and j < len(d):
+        if e[i] <= d[j]:
+            r.append(e[i])
+            i += 1
+        else:
+            r.append(d[j])
+            j += 1
+    r += e[i:]
+    r += d[j:]
+    return r
 
-    return 0
+def mergesort(v):
+    if len(v) <= 1:
+        return v
+    else:
+        m = len(v) // 2
+        e = mergesort(v[:m])
+        d = mergesort(v[m:])
+        return merge(e, d)
 
-def quicksort():
+
+
+def quicksort(lista):
+    if len(lista) <= 1: 
+        return lista
     
-    return 0
+    pivô = lista[0]
+    iguais  = [x for x in lista if x == pivô]
+    menores = [x for x in lista if x <  pivô]
+    maiores = [x for x in lista if x >  pivô]
+    return quicksort(menores) + iguais + quicksort(maiores)
 
 
-from random import random, shuffle
-lista = list(range(20))
-shuffle(lista)
-print(selection(lista))
+
+tempo = 0.0
+r = 2000
+lista_aux = list(range(r))
+shuffle(lista_aux)
+lista = []
+
+
+while (tempo < 30.00):
+    
+    lista_aux = list (range(r))
+    lista += (list(lista_aux))
+    tempo_inicio = time.time()
+
+    mergesort(list(lista))
+    tempo = (time.time() - tempo_inicio)
+    merge_tempo = "%.2f" % tempo
+ 
+    """tempo_inicio = time.time()
+    quicksort(list(lista))
+    tempo = (time.time() - tempo_inicio)
+    quicksort_tempo =  "%.2f" % tempo"""
+    
+    tempo_inicio = time.time()
+    selection(list(lista))
+    tempo = (time.time() - tempo_inicio)
+    selection_tempo =   "%.2f" % tempo
+    
+    if (r < 9999):
+        print ("{}     |    {}         {}           {}         {}".format(r, merge_tempo, 0.00, selection_tempo, 0.00))
+    else:
+        print ("{}    |    {}         {}           {}        {}".format(r, merge_tempo, 0.00, selection_tempo, 0.00))
+    r += 2000
+print ("-------------------------------------------------------------")
