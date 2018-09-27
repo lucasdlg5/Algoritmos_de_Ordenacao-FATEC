@@ -1,6 +1,8 @@
 #Lucas Domingos Leão Gomes
 from random import random, shuffle
-import time
+import time, sys
+
+sys.setrecursionlimit(999999999)
 print ("-------------------------------------------------------------\n         |                         Time(s)                  |\n-------------------------------------------------------------\n         |    Mergesort    QuickSort     Selection    Native|")
 def selection(v):
     ordenado = []
@@ -46,6 +48,7 @@ def quicksort(lista):
 
 
 
+
 tempo = 0.0
 r = 2000
 lista_aux = list(range(r))
@@ -63,19 +66,25 @@ while (tempo < 30.00):
     tempo = (time.time() - tempo_inicio)
     merge_tempo = "%.2f" % tempo
  
-    """tempo_inicio = time.time()
+    tempo_inicio = time.time()
     quicksort(list(lista))
     tempo = (time.time() - tempo_inicio)
-    quicksort_tempo =  "%.2f" % tempo"""
+    quicksort_tempo =  "%.2f" % tempo  
     
+    tempo_inicio = time.time()
+    sorted(list(lista))
+    tempo = (time.time() - tempo_inicio)
+    native_tempo =   "%.2f" % tempo
+
     tempo_inicio = time.time()
     selection(list(lista))
     tempo = (time.time() - tempo_inicio)
     selection_tempo =   "%.2f" % tempo
+
     
     if (r < 9999):
-        print ("{}     |    {}         {}           {}         {}".format(r, merge_tempo, 0.00, selection_tempo, 0.00))
+        print ("{}     |    {}         {}           {}         {}".format(r, merge_tempo, quicksort_tempo, selection_tempo, native_tempo))
     else:
-        print ("{}    |    {}         {}           {}        {}".format(r, merge_tempo, 0.00, selection_tempo, 0.00))
+        print ("{}    |    {}         {}           {}        {}".format(r, merge_tempo, quicksort_tempo, selection_tempo, native_tempo))
     r += 2000
 print ("-------------------------------------------------------------")
