@@ -36,7 +36,7 @@ def mergesort(v):
 
 
 
-def quicksort(lista):
+"""def quicksort(lista):
     if len(lista) <= 1: 
         return lista
     
@@ -44,9 +44,36 @@ def quicksort(lista):
     iguais  = [x for x in lista if x == pivô]
     menores = [x for x in lista if x <  pivô]
     maiores = [x for x in lista if x >  pivô]
-    return quicksort(menores) + iguais + quicksort(maiores)
+    return quicksort(menores) + iguais + quicksort(maiores)"""
 
 
+def partition(myList, start, end):
+    pivot = myList[start]
+    left = start+1
+    right = end
+    done = False
+    while not done:
+        while left <= right and myList[left] <= pivot:
+            left = left + 1
+        while myList[right] >= pivot and right >=left:
+            right = right -1
+        if right < left:
+            done= True
+        else:
+            temp=myList[left]
+            myList[left]=myList[right]
+            myList[right]=temp
+    temp=myList[start]
+    myList[start]=myList[right]
+    myList[right]=temp
+    return right
+
+def quicksort(myList, start, end):
+    if start < end: 
+        split = partition(myList, start, end)
+        quicksort(myList, start, split-1)
+        quicksort(myList, split+1, end)
+    return myList
 
 
 tempo = 0.0
@@ -67,7 +94,7 @@ while (tempo < 30.00):
     merge_tempo = "%.2f" % tempo
  
     tempo_inicio = time.time()
-    quicksort(list(lista))
+    quicksort(list(lista),0,len(lista)-1)
     tempo = (time.time() - tempo_inicio)
     quicksort_tempo =  "%.2f" % tempo  
     
