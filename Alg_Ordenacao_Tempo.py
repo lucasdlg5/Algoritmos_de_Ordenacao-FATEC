@@ -34,46 +34,28 @@ def mergesort(v):
         d = mergesort(v[m:])
         return merge(e, d)
 
-
-
-"""def quicksort(lista):
-    if len(lista) <= 1: 
-        return lista
-    
-    pivô = lista[0]
-    iguais  = [x for x in lista if x == pivô]
-    menores = [x for x in lista if x <  pivô]
-    maiores = [x for x in lista if x >  pivô]
-    return quicksort(menores) + iguais + quicksort(maiores)"""
-
-
-def partition(myList, start, end):
-    pivot = myList[start]
-    left = start+1
-    right = end
-    done = False
-    while not done:
-        while left <= right and myList[left] <= pivot:
-            left = left + 1
-        while myList[right] >= pivot and right >=left:
-            right = right -1
-        if right < left:
-            done= True
+def div_lista(array, ini_arr, fim_arr):
+    p, d, ri, f_cod = array[ini_arr], ini_arr + 1, fim_arr, True
+    while f_cod:
+        while array[d] <= p and d <= ri:
+            d += 1
+        while ri >= d and array[ri] >= p:
+            ri -= 1
+        if ri < d:
+            f_cod = False
         else:
-            temp=myList[left]
-            myList[left]=myList[right]
-            myList[right]=temp
-    temp=myList[start]
-    myList[start]=myList[right]
-    myList[right]=temp
-    return right
+            temp, array[d] = array[d], array[ri]
+            array[ri] =  temp
+    temp, array[ini_arr] = array[ini_arr], array[ri]
+    array[ri] = temp
+    return ri
 
-def quicksort(myList, start, end):
-    if start < end: 
-        split = partition(myList, start, end)
-        quicksort(myList, start, split-1)
-        quicksort(myList, split+1, end)
-    return myList
+def quicksort(array, ini_arr, fim_arr):
+    if  fim_arr > ini_arr: 
+        split = div_lista(array, ini_arr, fim_arr)
+        quicksort(array, ini_arr, split-1)
+        quicksort(array, split+1, fim_arr)
+    return array
 
 
 tempo = 0.0
